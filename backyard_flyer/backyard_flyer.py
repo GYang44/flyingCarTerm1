@@ -137,9 +137,6 @@ class UpAndDownFlyer(Drone):
 
 
 
-# In[5]:
-
-
 if __name__ == "__main__":
     wayPoints = [[0,0,3], [0,20,3], [20,20,3], [20,0,3], [0,0,3]]
     conn = MavlinkConnection('tcp:127.0.0.1:5760', 

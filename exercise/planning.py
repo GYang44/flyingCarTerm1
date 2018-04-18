@@ -26,16 +26,10 @@ class Action(Enum):
     RIGHT = (0, 1, 1)
     UP = (-1, 0, 1)
     DOWN = (1, 0, 1)
-
-    def __str__(self):
-        if self == self.LEFT:
-            return '<'
-        elif self == self.RIGHT:
-            return '>'
-        elif self == self.UP:
-            return '^'
-        elif self == self.DOWN:
-            return 'v'
+    NORTH_WEST = (-1, -1, np.sqrt(2))
+    NORTH_EAST = (-1, 1, np.sqrt(2))
+    SOUTH_WEST = (1, -1, np.sqrt(2))
+    SOUTH_EAST = (1, 1, np.sqrt(2))
 
     @property
     def cost(self):
@@ -50,7 +44,7 @@ def valid_actions(grid, current_node):
     """
     Returns a list of valid actions given a grid and current node.
     """
-    valid = [Action.UP, Action.LEFT, Action.RIGHT, Action.DOWN]
+    valid = list(Action)
     n, m = grid.shape[0] - 1, grid.shape[1] - 1
     x, y = current_node
 
@@ -65,6 +59,15 @@ def valid_actions(grid, current_node):
         valid.remove(Action.LEFT)
     if y + 1 > m or grid[x, y+1] == 1:
         valid.remove(Action.RIGHT)
+    
+    if (x - 1 < 0 or y - 1 < 0) or grid[x - 1, y - 1] == 1:
+        valid.remove(Action.NORTH_WEST)
+    if (x - 1 < 0 or y + 1 > m) or grid[x - 1, y + 1] == 1:
+        valid.remove(Action.NORTH_EAST)
+    if (x + 1 > n or y - 1 < 0) or grid[x + 1, y - 1] == 1:
+        valid.remove(Action.SOUTH_WEST)
+    if (x + 1 > n or y + 1 > m) or grid[x + 1, y + 1] == 1:
+        valid.remove(Action.SOUTH_EAST)
 
     return valid
 
@@ -118,16 +121,16 @@ def a_star(grid, start, goal):
         if current_node == goal:
             print('Found a path.')
             found = True
-
+            break
         else:
             for action in valid_actions(grid, current_node):
                 # get the tuple representation
                 da = action.delta
                 next_node = (current_node[0] + da[0], current_node[1] + da[1])
-                # TODO: calculate branch cost (action.cost + g)
-                # TODO: calculate queue cost (action.cost + g + h)
+                # Done: calculate branch cost (action.cost + g)
+                # Done: calculate queue cost (action.cost + g + h)
                 branch_cost = action.cost + current_cost
-                queue_cost = branch_cost + heuristic(current_node, goal)
+                queue_cost = branch_cost + heuristic(next_node, goal)
 
                 if next_node not in visited:
                     visited.add(next_node)
@@ -141,12 +144,12 @@ def a_star(grid, start, goal):
         n = goal
         path_cost = branch[n][0]
         while branch[n][1] != start:
-            path.append(branch[n][2])
+            path.append(branch[n][1])
             n = branch[n][1]
-        path.append(branch[n][2])
+        path.append(branch[n][1])
     else:
         print('**********************')
-        print('Failed to find a path!')
+        print('Failed to find a path!!')
         print('**********************')
 
     return path[::-1], path_cost

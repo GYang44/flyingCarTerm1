@@ -51,30 +51,57 @@ def bres(p1, p2):
     x2, y2 = p2
     cells = []
     if x1 == x2:
-        for y in range (y1,y2):
+        min = np.minimum(y1,y2)
+        max = np.maximum(y1,y2)
+        for y in range (min,max):
             cells.append([x1, y])
-        print(cells)
-    else :
+    elif y1 == y2:
+        min = np.minimum(x1,x2)
+        max = np.maximum(x1,x2)
+        for x in range (min,max):
+            cells.append([x, y1])
+    else:
         slop = (y2 - y1)/(x2 - x1)
         x = 0
         y = 0
-        while x + x1 != x2:
-            cells.append([x1 + x, y1 + y])
-            if slop * (x + 1) > y + 1:
-                y += 1
-            else:
-                x += 1
+        if x1 < x2 and y1 < y2:
+            while x + x1 != x2 or y + y1 != y2:
+                cells.append([x1 + x, y1 + y])
+                if slop * (x + 1) > y + 1:
+                    y += 1
+                else:
+                    x += 1
+        elif x1 < x2 and y1 > y2:
+            while x + x1 != x2 or y + y1 != y2:
+                cells.append([x1 + x, y1 + y])
+                if slop * (x + 1) < y - 1:
+                    y -= 1
+                else:
+                    x += 1
+        elif x1 > x2 and y1 > y2:
+            while x + x1 != x2 or y + y1 != y2:
+                cells.append([x1 + x, y1 + y])
+                if slop * (x - 1) < y - 1:
+                    y -= 1
+                else:
+                    x -= 1
+        elif x1 > x2 and y1 < y2:
+            while x + x1 != x2 or y + y1 != y2:
+                cells.append([x1 + x, y1 + y])
+                if slop * (x - 1) > y + 1:
+                    y += 1
+                else:
+                    x -= 1
     
-    # TODO: Determine valid grid cells
+    # Done: Determine valid grid cells
         
     return np.array(cells)
-
 
 # Plotting the line with the cells which it crosses. 
 
 # In[29]:
 
-
+"""
 p1 = (0, 0)
 p2 = (7, 5)
 
@@ -137,4 +164,4 @@ plt.xlabel("X")
 plt.ylabel("Y")
 plt.title("Python package Bresenham algorithm")
 plt.show()
-
+"""

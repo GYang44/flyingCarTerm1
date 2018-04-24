@@ -5,7 +5,7 @@ from enum import Enum, auto
 
 import numpy as np
 
-from planning_utils import a_star, heuristic, create_grid
+from planning_utils import a_star, heuristic, create_grid, minimize_waypoints
 from udacidrone import Drone
 from udacidrone.connection import MavlinkConnection
 from udacidrone.messaging import MsgID
@@ -151,22 +151,23 @@ class MotionPlanning(Drone):
         # Set goal as some arbitrary position on the grid
         goal_global = (-122.393460, 37.795917, 0)
         goal_local_position = global_to_local(goal_global, self.global_home)
-
         grid_goal = (int(goal_local_position[0]) - north_offset, int(goal_local_position[1]) - east_offset)
-        # TODO: adapt to set goal as latitude / longitude position and convert
+        # Done: adapt to set goal as latitude / longitude position and convert
         # Run A* to find a path from start to goal
-        # TODO: add diagonal motions with a cost of sqrt(2) to your A* implementation
+        # Done: add diagonal motions with a cost of sqrt(2) to your A* implementation
         # or move to a different search space such as a graph (not done here)
         print('Local Start and Goal: ', grid_start, grid_goal)
         path, _ = a_star(grid, heuristic, grid_start, grid_goal)
-        # TODO: prune path to minimize number of waypoints
+        # Done: prune path to minimize number of waypoints
         # TODO (if you're feeling ambitious): Try a different approach altogether!
 
         # Convert path to waypoints
+        #for i in range(0,2):
+        path = minimize_waypoints(path)
         waypoints = [[p[0] + north_offset, p[1] + east_offset, TARGET_ALTITUDE, 0] for p in path]
         # Set self.waypoints
         self.waypoints = waypoints
-        # TODO: send waypoints to sim (this is just for visualization of waypoints)
+        # Done: send waypoints to sim (this is just for visualization of waypoints)
         self.send_waypoints()
 
     def start(self):

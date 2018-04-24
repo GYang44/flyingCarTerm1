@@ -67,7 +67,17 @@ Start the connection, logging and etc.
 #### 1.2.3 main function
 Create an instance of drone and initialize it properly.
 
-# 2. Implementation of home position
+# 2. Implementation of home position extraction
 This function is implemented in the *plan_path* function in class *MotionPlanning* in file *motion_planning.py*. By parsing the first line of the csv file, the latitude and longtitude of home position can be retrieved easily.
 
-# 3. I
+# 3. Implementation of start position extraction
+This is achieved by checking the global position of the drone upon path planning, the global position is then be converted to coordinated in local frame then adjusted by the offset of the grid.
+
+# 4. Implementation of goal position extraction
+The latitude and longtitude position of the goal position will be hardcoded, then been converted to grid coordinate using similar method as start position.
+
+# 5. Implementation of the diagnal move 
+Diagnal movements can be easiliy added by adding 4 differenct entries in the enumerate class. In valid actions add conditions regarding diagnal moves as well.
+
+# 6. Collinear check
+For collinear check, it take the list of path, then re-exame each entry and eliminate thoes collinear. To be more specific, it requires the path has at least 3 entries. For each point in the path, the algorithm will exame if they collinear, if yes, the second and third pointer will be incremented. Otherwise all pointer increment, and the seond pointer will be presever to a new list of path. Finally the new path will replace the old one.

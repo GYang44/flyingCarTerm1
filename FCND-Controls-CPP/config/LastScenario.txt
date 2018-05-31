@@ -1,1 +1,1 @@
-../config/3_PositionControl.txt
+../config/6_test.txt

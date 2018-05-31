@@ -168,7 +168,7 @@ float QuadControl::AltitudeControl(float posZCmd, float velZCmd, float posZ, flo
   ////////////////////////////// BEGIN STUDENT CODE ///////////////////////////
 
   float u_1_bar = kpPosZ * (posZCmd - posZ) + kpVelZ * (velZCmd - velZ) + accelZCmd + KiPosZ * dt *  (posZCmd - posZ);
-  float thrust = - ( (u_1_bar ) / R(2, 2) + 9.81f) * mass;
+  float thrust = - ( (u_1_bar ) / R(2, 2) - 9.81f) * mass;
 
   /////////////////////////////// END STUDENT CODE ////////////////////////////
   

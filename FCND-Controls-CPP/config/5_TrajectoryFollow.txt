@@ -33,7 +33,7 @@ TrajectoryOffset = 0,1.5,0
 [Quad2:Quad]
 InitialPos=0,-1,-1
 TrajectoryOffset=0,-1.5,0
-#ControlConfig = QuadControlParamsFF
+ControlConfig = QuadControlParamsFF
 
 [QuadControlParamsFF:QuadControlParams]
 Trajectory=traj/FigureEightFF.txt

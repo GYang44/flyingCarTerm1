@@ -1,1 +1,1 @@
-../config/2_AttitudeControl.txt
+../config/6_Test.txt

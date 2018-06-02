@@ -72,13 +72,15 @@ VehicleCommand QuadControl::GenerateMotorCommands(float collThrustCmd, V3F momen
 
 	float sqrt_2(sqrt(2));
 	float c_bar = - collThrustCmd;
-	float p_bar = sqrt_2 * momentCmd.x / L;
-	float q_bar = sqrt_2 * momentCmd.y / L;
-	float r_bar = momentCmd.z / kappa;
-	cmd.desiredThrustsN[0] = - (c_bar - p_bar - q_bar + r_bar) / 4; //front left
-	cmd.desiredThrustsN[1] = - (c_bar + p_bar - q_bar - r_bar) / 4; //front right
-	cmd.desiredThrustsN[2] = - (c_bar - p_bar + q_bar - r_bar) / 4; //rear left
-	cmd.desiredThrustsN[3] = - (c_bar + p_bar + q_bar + r_bar) / 4; //rear right
+	float p_bar = sqrt_2 * momentCmd.x * Ixx / L;
+	float q_bar = sqrt_2 * momentCmd.y * Iyy / L;
+	float r_bar = momentCmd.z * Izz / kappa;
+		
+	cmd.desiredThrustsN[0] = -(c_bar - p_bar - q_bar + r_bar) / 4; //front left
+	cmd.desiredThrustsN[1] = -(c_bar + p_bar - q_bar - r_bar) / 4; //front right
+	cmd.desiredThrustsN[2] = -(c_bar - p_bar + q_bar - r_bar) / 4; //rear left
+	cmd.desiredThrustsN[3] = -(c_bar + p_bar + q_bar + r_bar) / 4; //rear right
+	
   /////////////////////////////// END STUDENT CODE ////////////////////////////
 	
   return cmd;
@@ -100,8 +102,7 @@ V3F QuadControl::BodyRateControl(V3F pqrCmd, V3F pqr)
 
 
   ////////////////////////////// BEGIN STUDENT CODE ///////////////////////////
-   V3F pqr_error = pqrCmd - pqr;
-   V3F moment(pqr_error.x * Ixx, pqr_error.y * Iyy, pqr_error.z * Izz);
+
    V3F momentCmd = kpPQR * (pqrCmd - pqr);
 
   /////////////////////////////// END STUDENT CODE ////////////////////////////
@@ -137,7 +138,7 @@ V3F QuadControl::RollPitchControl(V3F accelCmd, Quaternion<float> attitude, floa
 	pqrCmd.x =  (R(1, 0) * b_x_c_dot - R(0, 0) * b_y_c_dot) / R(2, 2);
 	pqrCmd.y =  (R(1, 1) * b_x_c_dot - R(0, 1) * b_y_c_dot) / R(2, 2);
 
-	pqrCmd.constrain(-maxTiltAngle, maxTiltAngle, -maxTiltAngle, maxTiltAngle, pqrCmd.z, pqrCmd.z);
+	//pqrCmd.constrain(-maxTiltAngle, maxTiltAngle, -maxTiltAngle, maxTiltAngle, pqrCmd.z, pqrCmd.z);
 
   /////////////////////////////// END STUDENT CODE ////////////////////////////
 
@@ -171,7 +172,7 @@ float QuadControl::AltitudeControl(float posZCmd, float velZCmd, float posZ, flo
   integratedAltitudeError += dt * (posZCmd - posZ);
   accelZCmd = CONSTRAIN(accelZCmd, -maxAscentRate, maxDescentRate);
   float u_1_bar = kpPosZ * (posZCmd - posZ) + kpVelZ * (velZCmd - velZ) + accelZCmd + KiPosZ * integratedAltitudeError;
-  float acc = u_1_bar + 9.18f;
+  float acc = u_1_bar - 9.18f;
   float thrust = - acc / R(2,2) * mass;
 
   /////////////////////////////// END STUDENT CODE ////////////////////////////

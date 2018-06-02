@@ -1,75 +1,40 @@
-# Hover at the initial point using full 3D control
-
-
+# Attitude control
 
 INCLUDE QuadPhysicalParams.txt
 
-
-
 # simulation setup
-
 Sim.RunMode = Repeat
-
-Sim.EndTime = 3
-
-Sim.Vehicle1 = Quad1
-
-
+Sim.EndTime = 10
+Sim.Vehicle1 = Quad
 
 # Controller selection
-
 Quad.ControlType = QuadControl
-
 Quad.ControlConfig = QuadControlParams
 
-
-
 # reference trajectory (just the starting position)
-
 QuadControlParams.Trajectory=0,0,-1
 
-#QuadControlParams.Trajectory=traj/CircleNoFF.txt
-
-
-
 # initial conditions
-
-Quad.InitialPos=1,0,-.5
-
+Quad.InitialPos=0,0,-7
 Quad.InitialVel=0,0,0
-
-Quad.InitialYPR=0,0,0
-
-Quad.InitialOmega=0,0,0
-
-
+Quad.InitialYPR=1,0,0
+Quad.InitialOmega=0,0,2
 
 # graphing commands
-
-Commands.1=AddGraph1.Quad1.PosFollowErr
-
-Commands.2=Toggle.RefTrajectory
-
-Commands.3=Toggle.ActualTrajectory
-
-Commands.4=AddGraph1.WindowThreshold(Quad1.PosFollowErr,0.1,1.5)
-
-
+Commands.1=AddGraph1.Quad.Roll
+Commands.2=AddGraph1.AbsThreshold(Quad.Roll,0.03,0.1)
+Commands.3=AddGraph2.Quad.Omega.X
+Commands.4=AddGraph2.AbsThreshold(Quad.Omega.X,3,0.1)
+Commands.5=AddGraph1.WindowThreshold(Quad.Roll,0.025,0.75)
+Commands.6=AddGraph2.WindowThreshold(Quad.Omega.X,2.5,0.75)
 
 INCLUDE QuadControlParams.txt
-
 INCLUDE Simulation.txt
 
-
-
-# Vehicle-specific config
-
-
-
-[Quad1:Quad]
-
-InitialPos=-2,-1,-1
-
-TrajectoryOffset=0,-1,0
-
-cy=-.05
+# make sure position control is turned off here
+[QuadControlParams]
+kpPosXY = 0
+kpPosZ = 0
+kpVelXY = 0
+kpVelZ = 0
+KiPosZ = 0

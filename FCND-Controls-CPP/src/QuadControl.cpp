@@ -72,9 +72,9 @@ VehicleCommand QuadControl::GenerateMotorCommands(float collThrustCmd, V3F momen
 
 	float sqrt_2(sqrt(2));
 	float c_bar = - collThrustCmd;
-	float p_bar = sqrt_2 * momentCmd.x * Ixx / L;
-	float q_bar = sqrt_2 * momentCmd.y * Iyy / L;
-	float r_bar = momentCmd.z * Izz / kappa;
+	float p_bar = sqrt_2 * momentCmd.x / L;
+	float q_bar = sqrt_2 * momentCmd.y / L;
+	float r_bar = momentCmd.z / kappa;
 		
 	cmd.desiredThrustsN[0] = -(c_bar - p_bar - q_bar + r_bar) / 4; //front left
 	cmd.desiredThrustsN[1] = -(c_bar + p_bar - q_bar - r_bar) / 4; //front right
@@ -102,8 +102,8 @@ V3F QuadControl::BodyRateControl(V3F pqrCmd, V3F pqr)
 
 
   ////////////////////////////// BEGIN STUDENT CODE ///////////////////////////
-
-   V3F momentCmd = kpPQR * (pqrCmd - pqr);
+	V3F inertial(Ixx, Iyy, Izz);
+   V3F momentCmd = kpPQR * (pqrCmd - pqr) * inertial;
 
   /////////////////////////////// END STUDENT CODE ////////////////////////////
 

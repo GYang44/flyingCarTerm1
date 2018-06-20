@@ -291,7 +291,7 @@ void QuadEstimatorEKF::UpdateFromMag(float magYaw)
 // z: measurement
 // H: Jacobian of observation function evaluated at the current estimated state
 // R: observation error model covariance 
-// zFromX: measurement prediction based on current state
+// zFromX: measurement prediction based on current state 
 void QuadEstimatorEKF::Update(VectorXf& z, MatrixXf& H, MatrixXf& R, VectorXf& zFromX)
 {
   assert(z.size() == H.rows());

@@ -1,29 +1,4 @@
 ﻿  0 File(s) copied
-  BaseController.cpp
-  ColorUtils.cpp
-  DrawingFuncs.cpp
-  GLUTMenu.cpp
-  Graph.cpp
-  GraphManager.cpp
-  Visualizer_GLUT.cpp
-  main.cpp
-  Geometry.cpp
-  Random.cpp
-  MavlinkNode.cpp
-  MavlinkTranslation.cpp
-  PracticalSocket.cpp
-c:\users\guojun yang\documents\temporarydoc\flyingcar\fcnd-term1-starter-kit\submission\fcnd-controls-cpp\src\mavlinknode\practicalsocket.cpp(114): warning C4244: '=': conversion from 'SOCKET' to 'int', possible loss of data
-c:\users\guojun yang\documents\temporarydoc\flyingcar\fcnd-term1-starter-kit\submission\fcnd-controls-cpp\src\mavlinknode\practicalsocket.cpp(285): warning C4244: '=': conversion from 'SOCKET' to 'int', possible loss of data
   QuadControl.cpp
 c:\users\guojun yang\documents\temporarydoc\flyingcar\fcnd-term1-starter-kit\submission\fcnd-controls-cpp\src\quadcontrol.cpp(73): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-  BaseDynamics.cpp
-  QuadDynamics.cpp
-  Simulator.cpp
-  Trajectory.cpp
-  Camera.cpp
-  SimpleConfig.cpp
-  Generating Code...
-  Compiling...
-  Timer.cpp
-  Generating Code...
   Simulator.vcxproj -> C:\Users\Guojun Yang\Documents\TemporaryDoc\flyingCar\FCND-Term1-Starter-Kit\submission\FCND-Controls-CPP\project\x64\Debug\Simulator.exe

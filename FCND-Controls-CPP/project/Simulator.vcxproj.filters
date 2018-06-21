@@ -210,5 +210,9 @@
     <Text Include="..\config\X_Scenarios.txt" />
     <Text Include="..\config\X_TestManyQuads.txt" />
     <Text Include="..\config\X_TestMavlink.txt" />
+    <Text Include="..\config\6_test.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\README.md" />
   </ItemGroup>
 </Project>

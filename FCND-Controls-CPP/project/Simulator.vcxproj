@@ -84,6 +84,7 @@
     <Text Include="..\config\3_PositionControl.txt" />
     <Text Include="..\config\4_Nonidealities.txt" />
     <Text Include="..\config\5_TrajectoryFollow.txt" />
+    <Text Include="..\config\6_test.txt" />
     <Text Include="..\config\LastScenario.txt" />
     <Text Include="..\config\QuadControlParams.txt" />
     <Text Include="..\config\QuadPhysicalParams.txt" />
@@ -92,6 +93,9 @@
     <Text Include="..\config\X_Scenarios.txt" />
     <Text Include="..\config\X_TestManyQuads.txt" />
     <Text Include="..\config\X_TestMavlink.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\README.md" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

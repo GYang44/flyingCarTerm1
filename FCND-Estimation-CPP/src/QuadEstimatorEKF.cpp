@@ -167,7 +167,16 @@ VectorXf QuadEstimatorEKF::PredictState(VectorXf curState, float dt, V3F accel, 
 
   ////////////////////////////// BEGIN STUDENT CODE ///////////////////////////
 
+  predictedState(0) += predictedState(3) * dt;
+  predictedState(1) += predictedState(4) * dt;
+  predictedState(2) += predictedState(5) * dt;
+  
+  V3F predictedAccel = attitude.Rotate_BtoI(accel);
 
+  predictedState(3) += predictedAccel.x * dt;
+  predictedState(4) += predictedAccel.y * dt;
+  predictedState(5) += (predictedAccel.z - 9.81f) * dt;
+  
   /////////////////////////////// END STUDENT CODE ////////////////////////////
 
   return predictedState;
@@ -193,7 +202,10 @@ MatrixXf QuadEstimatorEKF::GetRbgPrime(float roll, float pitch, float yaw)
   //   that your calculations are reasonable
 
   ////////////////////////////// BEGIN STUDENT CODE ///////////////////////////
-
+  float phi = roll, theta = pitch, psi = yaw;
+  RbgPrime(0, 0) = -cos(theta) * sin(psi); RbgPrime(0, 1) = -sin(phi) * sin(theta) * sin(psi) - cos(phi) * cos(psi); RbgPrime(0, 2) = -cos(phi) * sin(theta) * sin(psi) + sin(phi) * cos(psi);
+  RbgPrime(1, 0) = cos(theta) * cos(psi); RbgPrime(1, 1) = sin(phi) * sin(theta) * cos(psi) - cos(phi) * sin(psi); RbgPrime(1, 2) = cos(phi) * sin(theta) * cos(psi) + sin(phi) * sin(psi);
+  RbgPrime(2, 0) = 0; RbgPrime(2, 1) = 0; RbgPrime(2, 2) = 0;
 
   /////////////////////////////// END STUDENT CODE ////////////////////////////
 
@@ -240,7 +252,11 @@ void QuadEstimatorEKF::Predict(float dt, V3F accel, V3F gyro)
 
   ////////////////////////////// BEGIN STUDENT CODE ///////////////////////////
 
-
+  gPrime(0, 3) = dt; gPrime(1, 4) = dt; gPrime(2, 5) = dt;
+  gPrime(3, 6) = RbgPrime(0, 0) * accel.x + RbgPrime(0, 1) * accel.y + RbgPrime(0, 2) * accel.z;
+  gPrime(4, 6) = RbgPrime(1, 0) * accel.x + RbgPrime(1, 1) * accel.y + RbgPrime(1, 2) * accel.z;
+  gPrime(5, 6) = RbgPrime(2, 0) * accel.x + RbgPrime(2, 1) * accel.y + RbgPrime(2, 2) * accel.z;
+  ekfCov = gPrime * ekfCov * gPrime.transpose() + Q;
   /////////////////////////////// END STUDENT CODE ////////////////////////////
 
   ekfState = newState;

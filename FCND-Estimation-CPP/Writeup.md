@@ -34,4 +34,8 @@ Most of the update tasks are implemented in Update() function which is provide. 
 
 ## 5.GPS Update ##
 
+UpdateFromGPS() can be easily implemented since the $h$ and $h'$ vector and matrix simple. The most challenging part is tune the process error parameter, this was carefully done by observing the deviation plotted in the graph.
+
+![Scenario 11_GPSUpdate](ScreenShots/11_GPSUpdate-screenshot.png)
+
 ## 6.

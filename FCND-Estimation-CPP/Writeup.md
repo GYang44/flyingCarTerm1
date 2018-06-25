@@ -4,11 +4,13 @@
 I finished this step using excel from microsoft office, simply by seperate the time from data, the standard deviation can be easily caculated using built in function from excel.
 
 Standard deviation of postion X from GPS and acceleration X from IMU are calculated as 0.713633 and 0.488362 respectivly.
+![Scenario 6_SensorNoise](ScreenShots/06_SensorNoise.png)
 
 ## 2.Attitude Estimation ##
 This part is implemented as suggested in the comment of UpdateFromIMU() function in QuadEstimatorEKF.cpp.
 
 First, a Quaternion instance is created using estimated attitude from previous step. Then the quaternion were integrated with bodyrates measured by gyro. Finally the integrated quaternion were converted back to Euler angles. Then after applying the complementary filter, we have estimated attitude.
+![Senario 7_AttitudeEstimation](ScreenShots/07_AttitudeEstimation.png)
 
 ## 3.Prediction ##
 
@@ -39,3 +41,10 @@ UpdateFromGPS() can be easily implemented since the $h$ and $h'$ vector and matr
 ![Scenario 11_GPSUpdate](ScreenShots/11_GPSUpdate-screenshot.png)
 
 ## 6.Using in-house Built Controller ##
+
+After replacing the QuadControl.cpp with previous version, the drone will crash when flying backward(heading $\pi$), soon I realized that was the same problem as magnetometer update. When heading $\pi$, if the drone turns slitest to $-\pi$ the yaw rate controller will generate a large input. Using similar solution as magnetometometer update function, the problem was fixed.
+
+Then set the sensor to none idea type, the drone can fly around with error with 1 meter. No estimator parameter was changed.
+
+![Scenario 11_GPSUpdate with in-house controller](ScreenShots/11_GPSUpdate_with_in-house_controller-screenshot.png)
+

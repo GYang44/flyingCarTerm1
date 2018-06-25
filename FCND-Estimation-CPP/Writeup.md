@@ -38,4 +38,4 @@ UpdateFromGPS() can be easily implemented since the $h$ and $h'$ vector and matr
 
 ![Scenario 11_GPSUpdate](ScreenShots/11_GPSUpdate-screenshot.png)
 
-## 6.
+## 6.Using in-house Built Controller ##

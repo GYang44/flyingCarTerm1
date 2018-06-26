@@ -48,3 +48,6 @@ Then set the sensor to none idea type, the drone can fly around with error with 
 
 ![Scenario 11_GPSUpdate with in-house controller](ScreenShots/11_GPSUpdate_with_in-house_controller-screenshot.png)
 
+## 7.Response to review ##
+### 2nd Attempt ###
+The magnenometer became a problem after repleacing controller source code. After tunning the magnenometer to meet the criteria for scenario 5, drone can no longer operate properly in scenario 7. With reduced deviation the drone will be more confident with speed estimation, as an result, PID controller will try to fix such noisy estimationn by making swift maneuvers, which cause crash. to fix this, I reduece the body rate and bank gain in controller parameters. 
